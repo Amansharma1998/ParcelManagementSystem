@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  capacity: 1
+  departure_time: 2023-09-06 10:21:56
+  arrival_time: 2023-09-06 10:21:56
+  station_from_id: 1
+  station_to_id: 1
+
+two:
+  name: MyString
+  capacity: 1
+  departure_time: 2023-09-06 10:21:56
+  arrival_time: 2023-09-06 10:21:56
+  station_from_id: 1
+  station_to_id: 1

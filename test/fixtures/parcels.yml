@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  category: MyString
+  weight: 1.5
+  station_to_id: 1
+  station_from_id: 1
+  date: 2023-09-06
+
+two:
+  name: MyString
+  category: MyString
+  weight: 1.5
+  station_to_id: 1
+  station_from_id: 1
+  date: 2023-09-06
