@@ -11,22 +11,26 @@ class ParcelsController < ApplicationController
     render json: @parcel
   end
 
-  def create
+  def create 
     @train = Train.find(params[:train_id])
     @parcel = Parcel.new(parcel_params)
     if @train.train_departure
-      render plain: 'Train has already departed cannot add parcel in it.'
-    elsif @train.add_parcel(@parcel)
-      @parcel.train = @train
-      if @parcel.save
-        render plain: 'Parcel was successfully created.'
+      if @train.add_parcel(@parcel)
+         @parcel.train = @train
+          if @parcel.save
+            render plain: 'Parcel was successfully created.'
+          else
+            ender json: @parcel.errors, status: 422
+          end
       else
-        render json: @parcel.errors, status: 422
+        render plain: 'Parcel was capacity exceeds we cannot add'
       end
-    else
-      render plain: 'Parcel was capacity exceeds we cannot add'
-    end
-  end
+         
+    else 
+      render plain: 'Train has already departed cannot add parcel in it.'
+       
+    end 
+  end 
 
   def update
     @parcel = Parcel.find(params[:id])
@@ -46,6 +50,6 @@ class ParcelsController < ApplicationController
   private
 
   def parcel_params
-    params.permit(:name, :category, :weight, :station_to_id, :station_from_id, :date, :train_id)
+    params.permit(:name, :category, :weight, :station_to_id, :station_from_id, :date, :train_id ,:image)
   end
 end
