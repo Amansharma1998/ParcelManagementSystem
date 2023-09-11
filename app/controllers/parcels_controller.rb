@@ -20,7 +20,7 @@ class ParcelsController < ApplicationController
           if @parcel.save
             render json: { message: "Parcel Created", data: @parcel }
           else
-            ender json: @parcel.errors, status: 422
+            render json: @parcel.errors, status: 422
           end
       else
         render json: { message: "Parcel was capacity exceeds we cannot add." }
