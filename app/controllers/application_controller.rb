@@ -3,6 +3,9 @@
 class ApplicationController < ActionController::Base
   include JwtToken
   before_action :authenticate_user
+  before_action do
+    ActiveStorage::Current.host = request.base_url
+  end
 
   private
 

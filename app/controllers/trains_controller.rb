@@ -15,7 +15,7 @@ class TrainsController < ApplicationController
     @train = Train.new(train_params)
     if @train.valid?
       @train.save
-      render plain: 'Train was successfully created.'
+      render json: { message: "Train Created", data: @train }
     else
       render json: @train.errors, status: 422
     end
@@ -24,7 +24,7 @@ class TrainsController < ApplicationController
   def update
     @train = Train.find(params[:id])
     if @train.update(train_params)
-      render plain: 'Train was successfully updated.'
+      render json: { message: "Train updated", data: @train }
     else
       render :edit, status: 422
     end
@@ -33,7 +33,7 @@ class TrainsController < ApplicationController
   def destroy
     @train = Train.find(params[:id])
     @train.destroy
-    render plain: 'Train was successfully destroyed.'
+    render json: { message: "Train deleted" }
   end
 
   private

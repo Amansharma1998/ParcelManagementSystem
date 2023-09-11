@@ -14,7 +14,7 @@ class StationsController < ApplicationController
   def create
     @station = Station.new(station_params)
     if @station.save
-      render plain: 'Station was successfully created.'
+      render json: { message: "Station Created", data: @station }
     else
       render json: @station.errors, status: 422
     end
@@ -23,7 +23,7 @@ class StationsController < ApplicationController
   def update
     @station = Station.find(params[:id])
     if @station.update(station_params)
-      render plain: 'Station was successfully updated.'
+      render json: { message: "Station Updated", data: @station }
     else
       render :edit, status: 422
     end
@@ -32,7 +32,7 @@ class StationsController < ApplicationController
   def destroy
     @station = Station.find(params[:id])
     @station.destroy
-    render plain: 'Station was successfully destroyed.'
+    render json: { message: "Station Deleted"}
   end
 
   private

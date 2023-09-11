@@ -18,24 +18,23 @@ class ParcelsController < ApplicationController
       if @train.add_parcel(@parcel)
          @parcel.train = @train
           if @parcel.save
-            render plain: 'Parcel was successfully created.'
+            render json: { message: "Parcel Created", data: @parcel }
           else
             ender json: @parcel.errors, status: 422
           end
       else
-        render plain: 'Parcel was capacity exceeds we cannot add'
+        render json: { message: "Parcel was capacity exceeds we cannot add." }
       end
          
     else 
-      render plain: 'Train has already departed cannot add parcel in it.'
-       
+      render json: { message: "Train has already departed cannot add parcel in it." }
     end 
   end 
 
   def update
     @parcel = Parcel.find(params[:id])
     if @parcel.update(parcel_params)
-      render plain: 'Parcel was successfully updated.'
+      render json: { message: "Parcel updated", data: @parcel }
     else
       render :edit, status: 422
     end
@@ -44,7 +43,7 @@ class ParcelsController < ApplicationController
   def destroy
     @parcel = Parcel.find(params[:id])
     @parcel.destroy
-    render plain: 'Parcel was successfully destroyed.'
+    render json: { message: "Parcel deleted" }
   end
 
   private
