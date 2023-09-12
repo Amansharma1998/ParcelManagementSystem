@@ -2,19 +2,19 @@
 
 class ParcelsController < ApplicationController
   def index
-    @parcels = Parcel.all
-    if @parcels.present?
+    begin
+      @parcels = Parcel.all
       render json: @parcels
-    else 
+    rescue
       render json: {message: "No data found"}
     end
   end
 
   def show
-    @parcel = Parcel.find(params[:id])
-    if @parcel.present?
+    begin
+      @parcel = Parcel.find(params[:id])
       render json: @parcel
-    else 
+    rescue
       render json: {message: "No data found"}
     end 
   end
@@ -40,24 +40,24 @@ class ParcelsController < ApplicationController
   end 
 
   def update
-    @parcel = Parcel.find(params[:id])
-    if @parcel.present?
+    begin
+      @parcel = Parcel.find(params[:id])
       if @parcel.update(parcel_params)
         render json: { message: "Parcel updated", data: @parcel }
       else
         render json: {errors: @parcel.errors.full_messages},status: 422
       end
-    else 
+    rescue
       render json: {message: "No data found"}
     end 
   end
 
   def destroy
-    @parcel = Parcel.find(params[:id])
-    if @parcel.present?
+    begin
+      @parcel = Parcel.find(params[:id])
       @parcel.destroy
       render json: { message: "Parcel deleted" }
-    else 
+    rescue
       render json: {message: "No data found"}
     end 
   end

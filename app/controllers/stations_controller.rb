@@ -2,19 +2,19 @@
 
 class StationsController < ApplicationController
   def index
-    @stations = Station.all
-    if @stations.present?
+    begin
+      @stations = Station.all
       render json: @stations
-    else 
+    rescue
       render json: {message: "No data found"}
     end
   end
 
   def show
-    @station = Station.find(params[:id])
-    if @station.present?
+    begin
+      @station = Station.find(params[:id])
       render json: @station
-    else 
+    rescue
       render json: {message: "no data found"}
     end
   end
@@ -29,24 +29,24 @@ class StationsController < ApplicationController
   end
 
   def update
-    @station = Station.find(params[:id])
-    if @station.present?
+    begin
+      @station = Station.find(params[:id])
       if @station.update(station_params)
         render json: { message: "Station Updated", data: @station }
       else
         render json: {errors: @station.errors.full_messages},status: 422
       end
-    else 
+    rescue
       render json: {message:"no data founds"}
     end
   end
 
   def destroy
-    @station = Station.find(params[:id])
-    if @station.present?
+    begin
+      @station = Station.find(params[:id])
       @station.destroy
       render json: { message: "Station Deleted"}
-    else 
+    rescue
       render json: {message: "no data found"}
     end
   end
