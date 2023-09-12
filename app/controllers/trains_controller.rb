@@ -3,38 +3,53 @@
 class TrainsController < ApplicationController
   def index
     @trains = Train.all
-    render json: @trains
+    if @stations.present?
+      render json: @trains
+    else 
+      render json: {message: "No data found"}
+    end
   end
 
   def show
     @train = Train.find(params[:id])
-    render json: @train
+    if @stations.absent?
+      render json: {message: "No data found"}
+    else
+      render json: @train
+    end
   end
 
   def create
     @train = Train.new(train_params)
-    if @train.valid?
-      @train.save
+    if @train.save
       render json: { message: "Train Created", data: @train }
     else
-      render json: @train.errors, status: 422
+      render json: {errors: @train.errors.full_messages}, status: unprocessable_entity
     end
   end
 
   def update
     @train = Train.find(params[:id])
-    if @train.update(train_params)
-      render json: { message: "Train updated", data: @train }
-    else
-      render :edit, status: 422
+    if @train.present?
+      if @train.update(train_params)
+        render json: { message: "Train updated", data: @train }
+      else
+        render json: {errors: @train.errors.full_messages},status: 422
+      end
+    else 
+      render json: {message:"no data founds"}
     end
   end
 
   def destroy
     @train = Train.find(params[:id])
-    @train.destroy
-    render json: { message: "Train deleted" }
-  end
+    if @train.present?
+      @train.destroy
+      render json: { message: "Train deleted" }
+    else 
+      render json: {message:"no data founds"}
+    end
+  end 
 
   private
 

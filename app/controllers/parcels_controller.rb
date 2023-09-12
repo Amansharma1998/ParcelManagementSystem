@@ -3,12 +3,20 @@
 class ParcelsController < ApplicationController
   def index
     @parcels = Parcel.all
-    render json: @parcels
+    if @parcels.present?
+      render json: @parcels
+    else 
+      render json: {message: "No data found"}
+    end
   end
 
   def show
     @parcel = Parcel.find(params[:id])
-    render json: @parcel
+    if @parcel.present?
+      render json: @parcel
+    else 
+      render json: {message: "No data found"}
+    end 
   end
 
   def create 
@@ -33,17 +41,25 @@ class ParcelsController < ApplicationController
 
   def update
     @parcel = Parcel.find(params[:id])
-    if @parcel.update(parcel_params)
-      render json: { message: "Parcel updated", data: @parcel }
-    else
-      render :edit, status: 422
-    end
+    if @parcel.present?
+      if @parcel.update(parcel_params)
+        render json: { message: "Parcel updated", data: @parcel }
+      else
+        render json: {errors: @parcel.errors.full_messages},status: 422
+      end
+    else 
+      render json: {message: "No data found"}
+    end 
   end
 
   def destroy
     @parcel = Parcel.find(params[:id])
-    @parcel.destroy
-    render json: { message: "Parcel deleted" }
+    if @parcel.present?
+      @parcel.destroy
+      render json: { message: "Parcel deleted" }
+    else 
+      render json: {message: "No data found"}
+    end 
   end
 
   private
